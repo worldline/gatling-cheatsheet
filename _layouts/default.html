@@ -7,6 +7,7 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<link rel="stylesheet" href="nav.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -16,7 +17,20 @@
 <!-- add after bootstrap.min.js -->
 <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.3.0/dist/bootstrap-toc.min.js"></script>
   </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+  
+ <div class="container">
+    <div class="row">
+      <!-- sidebar, which will move to the top on a small screen -->
+      <div class="col-sm-3">
+        <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
+      </div>
+      <!-- main content area -->
+      <div class="col-sm-9">
+       {{ content }}
+      </div>
+    </div>
+  </div>
 
 {{ content }}
 
