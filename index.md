@@ -2,8 +2,6 @@
 layout: default
 ---
 
-* placeholder 
-{:toc}
 
 # title 1
 
