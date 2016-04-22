@@ -9,40 +9,55 @@ layout: default
 ### Values and definitions
         
 ```scala 
-    val x = 5 // constant, evaluated once
-              // x: Int = 5
-    x = 6     // Will fail (because x is immutable)
-              // error: reassignment to val
-    def y = 5 // definition (function), evaluated at each call
-              // y: Int
-    var v = 5 // variable, only use when really needed
-              // v: Int = 5
-    v = 8     // Will set v to 8 (because mutable)
-              // v: Int = 8
+val x = 5 // constant, evaluated once
+          // x: Int = 5
+
+x = 6     // Will fail (because x is immutable)
+          // error: reassignment to val
+
+def y = 5 // definition (function), evaluated at each call
+          // y: Int
+
+var v = 5 // variable, only use when really needed
+          // v: Int = 5
+
+v = 8     // Will set v to 8 (because mutable)
+          // v: Int = 8
    
 ```
 
-### Control constructs
+### Conditional 	and control constructs
+
+Conditional _expression_ :
 
 ```scala    
-    if (true) 1 else 2  // conditional _expression_, of type Int
-    // res0: Int = 1
-    
-    if (true) 1         // /!\ this is the same as 
-    if (true) 1 else () // which is of type AnyVal
-    // res1: AnyVal = 1
-    
-    //loop structures for imperative programming
-    var i = 0
-    while (i < 5) { println(i); i += 1} 
-    // Output :
-    // > 0
-    // > 1
-    // > 2
-    // > 3
-    // > 4
-    
-    do { println(i); i += 1} while (i < 5) // i still equals 5
+if (true) 1 else 2
+// res0: Int = 1
+```
+
+**Avoid omitting the else part** :
+
+```scala       
+if (true) 1         
+// this is the same as 
+if (true) 1 else () 
+// res1: AnyVal = 1
+```
+
+Loop structures for imperative programming :
+
+```scala          
+var i = 0
+while (i < 5) { println(i); i += 1} 
+// Output :
+// > 0
+// > 1
+// > 2
+// > 3
+// > 4
+
+do { println(i); i += 1} while (i < 5) 
+// i still equals 5
 ```
 
 ## Data Structures
@@ -52,23 +67,28 @@ layout: default
 ```scala 
 val t = (1, 2, 3) 
 // t: (Int, Int, Int) = (1,2,3)
-                                                              
-//destructuring bind: tuple unpacking via pattern matching
+```
+
+Destructuring bind (tuple unpacking via pattern matching) :
+
+```scala                                                               
 val (x, y, z) = t 
 // > x: Int = 1
 // > y: Int = 2
 // > z: Int = 3
-                                                              
-// access to tuple elements; index starts at 1
-// /!\ avoid if possible (readability)
+```
+
+Access to tuple elements; index starts at 1.
+**Avoid if possible** (readability).
+
+```scala                                                           
 val i = t._1 
 // i: Int = 1
-
 ```
 
 ### Case classes
 
-Gives more maintainable code
+They give more readable code.
 
 ```scala    
 case class Vector3d(x: Int, y: Int, z: Int)
@@ -84,20 +104,26 @@ val j = p.x
 ```scala    
 val xs = List(1, 2, 3)
 // xs: List[Int] = List(1, 2, 3)
-                                                              
-// unpacking via pattern matching
-val List(a, b, c) = List(1, 2, 3) 
-// > a: Int = 1
-// > b: Int = 2
-// > c: Int = 3
-
-// paren indexing; sugar for xs.apply(2)
-xs(2) 
-// res0: Int = 3
 
 //cons : creates a new list with prepended element
 0 :: xs 
 // res1: List[Int] = List(0, 1, 2, 3)
+```
+
+Unpacking lists via pattern matching :
+
+```scala                                                                
+val List(a, b, c) = List(1, 2, 3) 
+// > a: Int = 1
+// > b: Int = 2
+// > c: Int = 3
+```
+
+Paren indexing; sugar for ```xs.apply(2)```
+
+```scala                                                                
+xs(2) 
+// res0: Int = 3
 ```
 
 ### Ranges
@@ -116,16 +142,25 @@ xs(2)
 ```
 
 ## Functions
+
+### Declaration 
+
 ```scala 
-// function declaration :
 def f(x: Int): Int = { x * x }
 def f(x: Int): Int = x * x     // optional {}
 def f(x: Int) = x * x          // inferred return type
 
+// mandatory return type for recursive function
+def gcd(a:Int, b:Int): Int = 
+  if (b == 0) a else gcd(b, a % b)  
+
 // side effects only => Unit
 def log(x: Any): Unit = println(x) 
+```
 
-// anonymous function
+### Anonymous 
+
+```scala 
 (x: Int) => x * x   
 
 // with inferred type for argument
@@ -137,10 +172,6 @@ def log(x: Any): Unit = println(x)
                             
 // block style; returns last expression
 (1 to 5).map { x => val y=x*2; y } 
-
-// mandatory return type for recursive function
-def gcd(a:Int, b:Int): Int = 
-  if (b == 0) a else gcd(b, a % b)  
 ```
 
 ### Curry
@@ -186,13 +217,16 @@ class F(var x: Int) { // x is now modifiable
   private var secret = 1 // declare a private member
   def this() = this(42) // alternate constructor, calls primary constructor
 }
+```
 
-List(1, 2, 3) // factory method in companion object
-val cl = classOf[String] //class literal (java String.class)
+### Literal
+
+```scala 
+val cl = classOf[String] 
+//class literal (in java: String.class)
 
 val isString = c.isInstanceOf[String] // type check (runtime)
 val myString = c.asInstanceOf[String] // cast (runtime)
-
 ```
 
 ### Companion object
@@ -224,6 +258,8 @@ class Mixin extends Concrete(5) with T with U { // multiple inheritance
   val m = "hello" // a val or var can implement a def
   override def toString = "my mixin"
 }   
+
+List(1, 2, 3) // factory method in companion object
 ```
 
 ## Imports
@@ -249,7 +285,7 @@ package object mypkg {
 }   
 ```
 
-## Parametrization
+## Parametrization (generics)
 ```scala 
 // generic type.
 def mapmake[T](g: T = >T)(seq: List[T]) = seq.map(g)
@@ -321,7 +357,7 @@ List(1, "") match {
 }   
 ```
 
-## For Comprehensions
+## For comprehensions
 ```scala 
 // "for" declaration :
 for (x <- 1 to 10 if x % 2 == 0) yield x * 10
@@ -349,9 +385,9 @@ for {
 
 // default example :
 // for comprehension: cross product (all possible combinations of x and y)
-for (x <- 1 to 5; y <- 6 to 10) yield x * y
+for (x <- 1 to 5; y <- 6 to 10) yield x + y
 // same as :
-1 to 5 flatMap { x => 6 to 10 map { y => x * y } }
+1 to 5 flatMap { x => 6 to 10 map { y => x + y } }
 // Vector(6, 7, 8, 9, 10, 12, ...
 
 // imperative style example :   
@@ -370,9 +406,11 @@ for (x <- 1 to 5; y <- 6 to 10) {
 // ...   
 ```
 
-## Lazy Evaluation
+## Lazy evaluations
+
+### Lazy val declaration 
+
 ```scala 
-// Lazy vals declaration :
 lazy val x = { println("created"); 1 } // Not yet initialized.
 // x: Int = <lazy>
 
@@ -383,8 +421,11 @@ x * 2                                  // Initialized. "created" will be display
 
 x * 3                                  // Already initialized. No "created" displayed.
 // res1: Int = 3
-                                      
-// call-by-name argument
+```
+
+### Call-by-name arguments
+
+```scala                                       
 def log(level: Int, x: => Any): Unit = if (level > 0) println(x)
 // log: (level: Int, x: => Any)Unit
 
@@ -397,3 +438,4 @@ log(1, {println("Displayed !"); 3})
 // > 3
    
 ```
+
