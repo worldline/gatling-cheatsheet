@@ -2,14 +2,13 @@
 layout: default
 ---
 
-
 # Scala CheatSheet
 
 ## Basics
 
+### Values and definitions
+        
 ```scala 
-    //Values and definitions
-    
     val x = 5 // constant, evaluated once
               // x: Int = 5
     x = 6     // Will fail (because x is immutable)
@@ -20,9 +19,12 @@ layout: default
               // v: Int = 5
     v = 8     // Will set v to 8 (because mutable)
               // v: Int = 8
-    
-    //Control constructs
-    
+   
+```
+
+### Control constructs
+
+```scala    
     if (true) 1 else 2  // conditional _expression_, of type Int
     // res0: Int = 1
     
@@ -44,8 +46,10 @@ layout: default
 ```
 
 ## Data Structures
+
+### Tuples
+
 ```scala 
-//Tuples
 val t = (1, 2, 3) 
 // t: (Int, Int, Int) = (1,2,3)
                                                               
@@ -60,15 +64,23 @@ val (x, y, z) = t
 val i = t._1 
 // i: Int = 1
 
-//Case classes (gives more maintainable code)
+```
+
+### Case classes
+
+Gives more maintainable code
+```scala    
 case class Vector3d(x: Int, y: Int, z: Int)
 
 val p = Vector3d(1, 2, 3)
 // p: Vector3d = Vector3d(1,2,3)
 val j = p.x
 // j: Int = 1
+```
 
-// Basic immutable lists
+### Basic immutable lists
+
+```scala    
 val xs = List(1, 2, 3)
 // xs: List[Int] = List(1, 2, 3)
                                                               
