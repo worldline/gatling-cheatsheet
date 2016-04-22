@@ -69,6 +69,7 @@ val i = t._1
 ### Case classes
 
 Gives more maintainable code
+
 ```scala    
 case class Vector3d(x: Int, y: Int, z: Int)
 
