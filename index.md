@@ -78,7 +78,7 @@ val j = p.x
 // j: Int = 1
 ```
 
-### Basic immutable lists
+### Immutable Lists
 
 ```scala    
 val xs = List(1, 2, 3)
@@ -97,8 +97,11 @@ xs(2)
 //cons : creates a new list with prepended element
 0 :: xs 
 // res1: List[Int] = List(0, 1, 2, 3)
+```
 
-// Ranges 
+### Ranges
+
+```scala 
 1 to 5         
 // res2 = Range(1, 2, 3, 4, 5)
 1 until 6      // excludes the upper bound
@@ -137,7 +140,11 @@ def log(x: Any): Unit = println(x)
 // mandatory return type for recursive function
 def gcd(a:Int, b:Int): Int = 
   if (b == 0) a else gcd(b, a % b)  
+```
 
+### Curry
+
+```scala 
 val zscore = (mean: Double, sd: Double) => (x: Double) => (x - mean) / sd   
 // currying, obvious syntax
 def zscore(mean: Double, sd: Double) = (x: Double) => (x - mean) / sd   
@@ -153,6 +160,9 @@ def sum(args: Int*) = args.reduceLeft(_ + _) // varargs
 ```
 
 ## Object Oriented
+
+### Classes
+
 ```scala 
 class C(x: Int)
 val c = new C(4) // instanciation
@@ -182,7 +192,11 @@ val cl = classOf[String] //class literal (java String.class)
 val isString = c.isInstanceOf[String] // type check (runtime)
 val myString = c.asInstanceOf[String] // cast (runtime)
 
-// companion object
+```
+
+### Companion object
+
+```scala 
 object F {
   def apply(v: Int) = new F(v)
 }
