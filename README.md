@@ -3,7 +3,7 @@ layout: default
 redirect_from: /not-index
 ---
 
-* placeholder
+
 {:toc}
 
 # title 1
