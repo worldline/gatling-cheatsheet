@@ -311,19 +311,23 @@ class Lower[T>:A](var item: T)
 
 ## Pattern Matching
 ```scala 
+"a string" match {
+  case "a"       => // basic comparison
+  case "b" | "c" => // or
+  case _         => // matches anything, equivalent to default in Java
+}
+
 List() match {
-  // Using "case" reserved word
   case x :: xs =>
   // matches a list head & tail
   // introduces x and xs to the scope
-  case _       =>
-  // matches anything, equivalent to default in Java
+  case Nil     =>
 }
 
 Option(1) match {
   case Some(v) => v
   // introduces v to the scope
-  case None        => "default"
+  case None    => "default"
 }
 
 val value = 3
@@ -350,11 +354,17 @@ List(1, "") match {
   //creates aliases for the matched elements
 }
 
+val urlRe = """(https?:\/\/)?([\da-z\.-]+)([\/\w \.-]*)\/?""".r
+"http://www.google.fr/search" match {
+  case urlRe(protocol, host, path) =>
+  // extract groups from the pattern
+}
+
 ((1 to 5) zip (6 to 10)).map {
   case (x, y) => x * y
   // you need {} not () to use pattern matching 
   // (need to define an anonymous function)
-}   
+}
 ```
 
 ## For comprehensions
