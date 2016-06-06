@@ -490,6 +490,7 @@ fruits.flatMap(_.toList)
 fruits.map(_.toList).flatten 
 // same, but less efficient
 ```
+
 #### Combine elements
 
 ```scala 
