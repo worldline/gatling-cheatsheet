@@ -44,7 +44,7 @@ if (true) 1 else ()
 // res1: AnyVal = 1
 ```
 
-Loop structures for imperative programming :
+#### Loop structures for imperative programming :
 
 ```scala          
 var i = 0
@@ -69,7 +69,7 @@ val t = (1, 2, 3)
 // t: (Int, Int, Int) = (1,2,3)
 ```
 
-Destructuring bind (tuple unpacking via pattern matching) :
+#### Destructuring bind (tuple unpacking via pattern matching) :
 
 ```scala                                                               
 val (x, y, z) = t 
@@ -101,29 +101,105 @@ val j = p.x
 
 ### Immutable Lists
 
+#### List construction
+
 ```scala    
-val xs = List(1, 2, 3)
-// xs: List[Int] = List(1, 2, 3)
+val fruits = "apples" :: "oranges" :: "pears" :: Nil
+// Nil is same as List.empty[Nothing]
+
+val fibos = List(1, 2, 3, 5, 8, 13)
 
 //cons : creates a new list with prepended element
-0 :: xs 
-// res1: List[Int] = List(0, 1, 2, 3)
+0 :: fibos
+// List(0, 1, 2, 3, 5, 8, 13)
 ```
 
-Unpacking lists via pattern matching :
+#### Paren indexing;
+sugar for ```xs.apply(2)```
+
+```scala                                                                
+xs(2) 
+// res0: Int = 3
+```
+
+#### Basic methods
+
+```scala                                                                
+fruits.head   // "apples"
+fruits.tail   // List(oranges, pears)
+
+fibos.isEmpty // false
+Nil.isEmpty   // true
+
+fruits.length // 3
+fruits.size   // 3
+
+fruits.contains("pears") // true
+
+// pretty-print
+fibos.mkString                // "1235813"
+fibos.mkString(",")           // "1,2,3,5,8,13"
+fibos.mkString("[", ", ","]") // "[1,2,3,5,8,13]"
+
+// /!\ O(n) time
+fruits.last     // "pear" 
+fruits.init     // List(apples, oranges)
+```
+
+#### Methods which build new lists
+
+```scala                                                                
+fibos.take(4)     // List(1, 2, 3, 5)
+fibos.drop(4)     // List(8, 13)
+fibos.splitAt(4)  // (List(1, 2, 3, 5),List(8, 13))
+
+fibos.reverse     // List(13, 8, 5, 3, 2, 1)
+
+fruits.updated(1, "bananas") 
+// List(apples, bananas, pears)
+
+fruits ++ List("bananas", "melons") 
+// List(apples, oranges, pears, bananas, melons)
+fruits ::: List("bananas", "melons")
+// same result (++ is defined for all collections 
+// and ::: only for lists)
+```
+
+#### Order
+
+```scala      
+fibos.min // 1
+fibos.max // 13
+
+fruits.minBy(_.length) // "pears"
+fruits.maxBy(_.length) // "oranges"
+
+fruits.sorted // default order
+// List(apples, oranges, pears)
+fruits.sortBy(_.length)
+// List(pears, apples, oranges)                                                          
+```
+
+#### Zip / unzip
+
+```scala  
+fruits zip fibos
+// List((apples,1), (oranges,2), (pears,3))
+
+val pairs=List((1,6), (3,4), (5,2))
+val (l1, l2) = pairs.unzip
+// l1 = List(1, 3, 5)
+// l2 = List(6, 4, 2)
+// see also unzip3
+```
+
+#### Unpacking lists via pattern matching :
 
 ```scala                                                                
 val List(a, b, c) = List(1, 2, 3) 
 // > a: Int = 1
 // > b: Int = 2
 // > c: Int = 3
-```
-
-Paren indexing; sugar for ```xs.apply(2)```
-
-```scala                                                                
-xs(2) 
-// res0: Int = 3
 ```
 
 ### Ranges
@@ -263,6 +339,7 @@ List(1, 2, 3) // factory method in companion object
 ```
 
 ## Imports
+
 ```scala 
 //wildcard import : 
 import collection._ 
@@ -310,6 +387,7 @@ class Lower[T>:A](var item: T)
 ```
 
 ## Pattern Matching
+
 ```scala 
 "a string" match {
   case "a"       => // basic comparison
@@ -367,7 +445,72 @@ val urlRe = """(https?:\/\/)?([\da-z\.-]+)([\/\w \.-]*)\/?""".r
 }
 ```
 
-## For comprehensions
+## Collections API
+
+### Higher order functions on collections
+
+#### Filtering with a predicate
+
+```scala 
+fruits.exists(_.length == 5) 
+// true ("pears".length is 5)  
+fruits.forall(_.length == 5) 
+// false ("apples".length is 6)
+
+fibos.filter(i => i % 2 == 0) 
+// List(2, 8)
+fibos.filterNot(i => i % 2 == 0) 
+// List(1, 3, 5, 13)
+
+val (evens, odds) = fibos.partition(i => i % 2 == 0)
+// evens = List(2, 8)
+// odds = List(1, 3, 5, 13))
+
+fibos.takeWhile(i => i <= 8)
+// List(1, 2, 3, 5, 8)
+fibos.dropWhile(i => i <= 8)
+// List(13)
+fibos.span(i => i <= 8)
+(List(1, 2, 3, 5, 8),List(13))
+```
+
+#### Transformation
+
+```scala 
+fibos.map(i => i * 2) // List(2, 4, 6, 10, 16, 26)
+// can also be written
+fibos.map(_ * 2)
+// or even (since * is a method of Int)
+fibos.map(2*)
+
+fruits.map(_.toList)
+// List(List(a, p, p, l, e, s), List(o, r, a, n, g, e, s), List(p, e, a, r, s))
+fruits.flatMap(_.toList)
+// List(a, p, p, l, e, s, o, r, a, n, g, e, s, p, e, a, r, s)
+fruits.map(_.toList).flatten 
+// same, but less efficient
+```
+#### Combine elements
+
+```scala 
+fibos.reduce((x, y) => x + y)
+fibos.sum     // 32
+
+fibos.reduce(_ * _)
+fibos.product // 3120
+
+List.empty[Int].reduce((x, y) => x + y)
+// UnsupportedOperationException
+
+// fold to set the initial accumulator
+List.empty[Int].fold(0)((x, y) => x + y) // 0
+fibos.fold(1)((x, y) => x * y) // 3120
+
+// Note : use foldLeft, foldRight, reduceLeft, reduceRight 
+// when the operator is not associative
+```
+
+### For comprehensions
 ```scala 
 // "for" declaration :
 for (x <- 1 to 10 if x % 2 == 0) yield x * 10
@@ -445,7 +588,6 @@ log(0, {println("Not displayed."); 3})
 log(1, {println("Displayed !"); 3})
 // Output :
 // > Displayed !
-// > 3
-   
+// > 3   
 ```
 
