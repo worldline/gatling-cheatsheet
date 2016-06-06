@@ -560,6 +560,65 @@ for (x <- 1 to 5; y <- 6 to 10) {
 // ...   
 ```
 
+### Maps
+
+#### Basics
+
+```scala 
+val romanNumerals = Map("I" -> 1, "V" -> 5, "X" -> 10)
+romanNumerals("V") // 5
+
+// don't confuse Map (type) with map (method)
+romanNumerals.map {
+  case (rom, num) => (num, rom)
+}
+// Map(1 -> I, 5 -> V, 10 -> X)
+```
+
+#### Grouping
+
+```scala 
+val words = List("the", "quick", "fox", "jumped", "over", "the", "lazy", "dog")
+
+words.groupBy(_.length)
+// Map(5 -> List(quick), 
+//     4 -> List(over, lazy), 
+//     3 -> List(the, fox, the, dog),
+//     6 -> List(jumped))
+```
+
+#### Updating an immutable Map
+
+```scala 
+val capitals = Map("USA" -> "Washington", "Switzerland" -> "Bern")
+capitals.updated("France", "Paris")
+capitals + ("France" -> "Paris")
+// Map(USA -> Washington, Switzerland -> Bern, France -> Paris)
+
+capitals - "USA"
+// Map(Switzerland -> Bern)
+```
+
+#### Handling missing keys
+
+```scala 
+romanNumerals("II")
+// NoSuchElementException: key not found: II
+
+romanNumerals.get("II") // Option[Int] = None
+romanNumerals.get("I") // Option[Int] = Some(1)
+
+capitals.getOrElse("Italy", "undefined")
+// undefined
+
+val capitalsDef=  capitals.withDefaultValue("undefined")
+capitalsDef("Italy")
+// undefined
+
+capitalsDef.get("Italy")
+// None /!\
+```
+
 ## Lazy evaluations
 
 ### Lazy val declaration 
@@ -591,4 +650,3 @@ log(1, {println("Displayed !"); 3})
 // > Displayed !
 // > 3   
 ```
-
