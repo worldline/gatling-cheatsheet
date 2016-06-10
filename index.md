@@ -4,6 +4,8 @@ layout: default
 
 # Scala CheatSheet
 
+[Printable (MS Word) version](https://github.com/worldline/scala-cheatsheet/releases/download/v1.0/Scala.CheatSheet.docx)
+
 ## Basics
 
 ### Values and definitions
