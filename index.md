@@ -508,9 +508,19 @@ List.empty[Int].reduce((x, y) => x + y)
 // fold to set the initial accumulator
 List.empty[Int].fold(0)((x, y) => x + y) // 0
 fibos.fold(1)((x, y) => x * y) // 3120
+```
 
-// Note : use foldLeft, foldRight, reduceLeft, reduceRight 
-// when the operator is not associative
+##### Use foldLeft, foldRight, reduceLeft, reduceRight when the operator is not associative
+
+```scala 
+List(1, 3, 8).foldLeft(100)((s, x) => s - x)    
+// ((100 - 1) - 3) - 8 == 88
+List(1, 3, 8).foldRight(100)((s, x) => s - x)    
+// 1 - (3 - (8 - 100)) == -94
+List(1, 3, 8).reduceLeft((s, x) => s - x)    
+// (1 - 3) - 8 == -10
+List(1, 3, 8).reduceRight((s, x) => s - x)    
+// 1 - (3 - 8) == 6
 ```
 
 ### For comprehensions
