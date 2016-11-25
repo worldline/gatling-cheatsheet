@@ -28,7 +28,7 @@ setUp(scenario("Hello")
 
 ## Scenario
 
-Official doc : http://gatling.io/docs/2.2.3/general/scenario.html
+Official doc : <http://gatling.io/docs/2.2.3/general/scenario.html>
 
 ### Pauses
 
