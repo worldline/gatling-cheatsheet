@@ -51,7 +51,7 @@ Note : for the syntax ```2.milliseconds``` or ```5.seconds``` to compile, you ne
 import scala.concurrent.duration.DurationInt
 ```
 
-More info : http://gatling.io/docs/2.2.3/general/scenario.html#pause
+More info : <http://gatling.io/docs/2.2.3/general/scenario.html#pause>
 
 ### Loops
 
@@ -62,7 +62,7 @@ scenario("sample")
   )
 ```
 
-More info : http://gatling.io/docs/2.2.3/general/scenario.html#scenario-loops
+More info : <http://gatling.io/docs/2.2.3/general/scenario.html#scenario-loops>
 
 ## Injection of Virtual Users
 
@@ -108,5 +108,5 @@ heavisideUsers(10) over(2.seconds)
 // better approximation of a peak of users
 ```
 
-More info : http://gatling.io/docs/2.2.3/general/simulation_setup.html
+More info : <http://gatling.io/docs/2.2.3/general/simulation_setup.html>
 
