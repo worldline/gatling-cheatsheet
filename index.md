@@ -28,7 +28,9 @@ setUp(scenario("Hello")
 
 ## Scenario
 
-## Pauses
+Official doc : http://gatling.io/docs/2.2.3/general/scenario.html
+
+### Pauses
 
 ```scala 
 scenario("sample")
@@ -38,10 +40,73 @@ scenario("sample")
 ```
 
 ```scala 
-import scala.concurrent.duration.DurationInt
-
 scenario("sample")
   // ...
-  .pause(2.milliseconds) 
+  .pause(200.milliseconds) // fixed pause of 0.2 second
 ```
+
+Note : for the syntax ```2.milliseconds``` or ```5.seconds``` to compile, you need to add this import :
+
+```scala 
+import scala.concurrent.duration.DurationInt
+```
+
+More info : http://gatling.io/docs/2.2.3/general/scenario.html#pause
+
+### Loops
+
+```scala 
+scenario("sample")
+  .repeat(3)( // repeat 3 times
+  	 exec(http("google").get("http://www.google.fr"))
+  )
+```
+
+More info : http://gatling.io/docs/2.2.3/general/scenario.html#scenario-loops
+
+## Injection of Virtual Users
+
+```scala 
+val scn=scenario("My Scenario")
+
+setUp( 
+  scn.inject( 
+    nothingFor(4.seconds), 
+    atOnceUsers(10), 
+    rampUsers(10) over(5.seconds))
+```
+
+### Rampup
+
+```scala 
+rampUsers(10) over(5.seconds) 
+// linear rampup 
+// 10 users added over 5 seconds (1 extra user every 500 ms)
+```
+
+```scala 
+constantUsersPerSec(10) during(5.seconds) 
+// adds 10 users every second
+// (so a total of 50 users after 5 seconds)
+```
+
+### At once
+
+```scala 
+nothingFor(4.seconds)
+// no new users added during 4 seconds
+```
+
+```scala 
+atOnceUsers(10)
+// 10 users added immediately
+// not really recommended since it can hammer down the tested server
+```
+
+```scala 
+heavisideUsers(10) over(2.seconds)
+// better approximation of a peak of users
+```
+
+More info : http://gatling.io/docs/2.2.3/general/simulation_setup.html
 
