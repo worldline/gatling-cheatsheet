@@ -110,3 +110,65 @@ heavisideUsers(10) over(2.seconds)
 
 More info : <http://gatling.io/docs/2.2.3/general/simulation_setup.html>
 
+
+## Configuration
+      
+### Reading configuration
+
+```scala 
+val config = ConfigFactory.load("gatling.conf")
+
+val maxPlot = config.getInt("gatling.charting.maxPlotPerSeries")   
+```
+
+### Sample config file
+
+Put it in `src/test/resources/`
+
+```
+gatling {
+  charting {
+    maxPlotPerSeries= 1000 # Number of points per graph
+    indicators {
+      percentile1 = 50      # Value for the 1st percentile
+      percentile2 = 75      # Value for the 2nd percentile  
+    } 
+  } 
+}
+```
+
+### Overriding configuration by system properties
+
+```
+mvn gatling:test -Dgatling.simulationClass=demo.MySim -Dgatling.charting.maxPlotPerSeries=500
+```
+
+### Logs
+
+Sample logback.xml :
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx
+      </pattern>
+      <immediateFlush>false</immediateFlush>
+    </encoder>
+  </appender>
+
+  <!-- Uncomment for logging ALL HTTP request and responses -->
+  <!-- <logger name="io.gatling.http.ahc" level="TRACE" /> -->
+  <!-- <logger name="io.gatling.http.response" level="TRACE" /> -->
+  <!-- Uncomment for logging ONLY FAILED HTTP request and responses -->
+  <!-- <logger name="io.gatling.http.ahc" level="DEBUG" /> -->
+  <!-- <logger name="io.gatling.http.response" level="DEBUG" /> -->
+
+  <root level="WARN">
+    <appender-ref ref="CONSOLE" />
+  </root>
+
+</configuration>
+```
