@@ -8,4 +8,4 @@ Published version : http://worldline.github.io/gatling-cheatsheet
 
 Markdown source file : [index.md](index.md)
 
-
+Edit with [prose](http://prose.io/#worldline/gatling-cheatsheet)
