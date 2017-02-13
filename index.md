@@ -56,6 +56,9 @@ http("name")
   .post("http://mysite.com/users")
   .body(RawFileBody("bodyFileName.xml")).asXml
   .header("Content-type","application/json")
+
+// or 
+body(RawFileBody("bodyFileName.json")).asJSON
 ```
 
 
@@ -184,6 +187,52 @@ setUp(scn).assertions(
 ```
 
 More info : <http://gatling.io/docs/2.2.3/general/assertions.html>
+
+## Feeders
+
+### Basic usage
+
+```scala
+// 3 static entries with keys "foo", "bar"
+val feeder1 = Array( 
+  Map("foo" -> "foo1", "bar" -> "bar1"), 
+  Map("foo" -> "foo2", "bar" -> "bar2"), 
+  Map("foo" -> "foo3", "bar" -> "bar3"))
+
+// repeating the values 
+val feeder1a = feeder1.circular
+val feeder1b = feeder1.random
+
+// infinite entries with keys "value1", "value2"
+val feeder2 = Iterator.continually(Map("value1" -> 100, "value2" -> "toto"))
+
+// infinite random entries 
+val feeder3 = Iterator.continually(Map(
+  "value1" -> Random.nextInt(100),
+  "value2" -> Random.alphanumeric.take(4)))
+
+// using the feeder to build the URLs
+scenario("scn name")
+  .feed(feeder)
+  .exec(http("request name")
+    .get("/path/${value1}"))
+```
+
+### Advanced usage
+
+```scala
+// reading a csv file to build a feeder
+val feeder = csv("data.csv")
+// the csv file must have a header row which defines the keys and be comma (,) separated
+
+// filling a template file with the content of a feeder
+scn.feed(feeder).exec(
+  http("name")
+  .post("url")
+  .body(ELFileBody("filename.xml")).asXML))
+```
+
+More info : <http://gatling.io/docs/2.2.3/session/feeder.html>
 
 ## Configuration
       
