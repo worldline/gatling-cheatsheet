@@ -326,11 +326,8 @@ Sample logback.xml :
 
 Sample with jetty 
 
-```
-mvn install
-```
+`mvn install` will start jetty, run gatling, then stop jetty.
 
-Will start jetty, run gatling, then stop jetty.
 Note that you need to specify `<phase>integration-test</phase>`
 
 ```xml
