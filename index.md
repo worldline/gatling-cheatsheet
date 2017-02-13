@@ -27,6 +27,8 @@ setUp(scenario("Hello")
     .protocols(http.proxy(Proxy("proxy", 3128)))}   
 ```
 
+## http requests
+
 ### GET requests
 
 ```scala 
