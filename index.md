@@ -376,5 +376,4 @@ Note that you need to specify `<phase>integration-test</phase>`
       </goals>
     </execution>
   </executions>
-  ```
-
+```
