@@ -300,8 +300,8 @@ Sample logback.xml :
 
 ### run from maven
 
-with maven at least 3.3.1 : `mvn gatling:execute@sampleId`
-with older maven : `mvn gatling:execute -Dgatling.simulationClass=com.worldline.SampleSimulation`
+* with maven at least 3.3.1 : `mvn gatling:execute@sampleId`
+* with older maven : `mvn gatling:execute -Dgatling.simulationClass=com.worldline.SampleSimulation`
 
 ```xml
 <plugin>
