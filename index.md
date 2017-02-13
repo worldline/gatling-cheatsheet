@@ -54,7 +54,7 @@ Body file : (must be in `src/test/resources/bodies`)
 ```scala 
 http("name")
   .post("http://mysite.com/users")
-  .body(RawFileBody("user.json"))
+  .body(RawFileBody("bodyFileName.xml")).asXml
   .header("Content-type","application/json")
 ```
 
@@ -118,7 +118,7 @@ rampUsers(10) over(5.seconds)
 ```
 
 ```scala 
-constantUsersPerSec(10) during(5.seconds) 
+constantUsersPerSec(10) during(5.seconds) 
 // adds 10 users every second
 // (so a total of 50 users after 5 seconds)
 ```
@@ -143,6 +143,44 @@ heavisideUsers(10) over(2.seconds)
 
 More info : <http://gatling.io/docs/2.2.3/general/simulation_setup.html>
 
+## Checks and Assertions
+
+### Checks
+
+Checking status and json data :
+
+```scala 
+http("name").get("/path")
+  .check(status.is(200))
+  .check(jsonPath("$.name").is("some name"))
+```
+
+Saving response data to gatling session
+
+```scala 
+http("name").get("/path")
+  .check(header("location").saveAs("newLocation"))
+  .check(jsonPath("$.name").saveAs("name"))
+  
+// You can now use $newLocation and $name in your requests :
+http("get home").get("/users/${name}")
+```
+
+### Assertions
+
+```scala 
+setUp(scn).assertions( 
+  global.responseTime.mean.lessThan(50), // mean resp time < 50 ms    
+  forAll.failedRequests.percent.lessThan(5) // for each request, < 5% failure
+)
+// data : responseTime (in milliseconds), requestsPerSec
+// requests : allRequests, failedRequests, successfulRequests
+// units : percent, permillion, count
+// aggregations : min, max, mean, stdDev, percentile1 to percentile4
+// comparison : lessThan(threshold), greaterThan(threshold), between(thresholdMin, thresholdMax), 
+//              is(value), in(sequence)
+
+```
 
 ## Configuration
       
