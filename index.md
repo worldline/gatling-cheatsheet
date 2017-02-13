@@ -1,5 +1,6 @@
 ---
 layout: default
+published: true
 ---
 
 # Gatling CheatSheet
@@ -25,6 +26,38 @@ setUp(scenario("Hello")
     .inject(atOnceUsers(1)))
     .protocols(http.proxy(Proxy("proxy", 3128)))}   
 ```
+
+### GET requests
+
+```scala 
+http("name")
+  .get("http://www.google.fr")
+  .queryParam("query", "gatling")
+  .queryParam("source", "mobile")
+  .header("Accept-Language", "fr")
+```
+
+### POST requests
+
+Form params :
+
+```scala 
+http("name")
+  .post("http://mysite.com/users")
+  .formParam("firstname", "gatling")
+  .formParam("lastname", "stress tool")
+  .header("Accept-Language", "fr")
+```
+
+Body file : (must be in `src/test/resources/bodies`)
+
+```scala 
+http("name")
+  .post("http://mysite.com/users")
+  .body(RawFileBody("user.json"))
+  .header("Content-type","application/json")
+```
+
 
 ## Scenario
 
