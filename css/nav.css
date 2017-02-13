@@ -19,3 +19,11 @@ nav[data-toggle='toc'] {
     display: block;
   }
 }
+
+@media print
+{    
+    nav .nav 
+    {
+        display: none !important;
+    }
+}
