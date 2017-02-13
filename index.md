@@ -295,3 +295,86 @@ Sample logback.xml :
 
 </configuration>
 ```
+
+## Maven integration
+
+### run from maven
+
+with maven at least 3.3.1 : `mvn gatling:execute@sampleId`
+with older maven : `mvn gatling:execute -Dgatling.simulationClass=com.worldline.SampleSimulation`
+
+```xml
+<plugin>
+  <groupId>io.gatling</groupId>
+  <artifactId>gatling-maven-plugin</artifactId>
+  <version>2.2.0</version>
+  <executions>
+    <execution>
+      <id>sampleId</id>
+      <goals>
+        <goal>execute</goal>
+      </goals>
+      <configuration>
+        <simulationClass>com.worldline.SampleSimulation</simulationClass>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+```
+
+### start / stop your application server
+
+Sample with jetty 
+
+```
+mvn install
+```
+
+Will start jetty, run gatling, then stop jetty.
+Note that you need to specify `<phase>integration-test</phase>`
+
+```xml
+<plugin>
+  <groupId>io.gatling</groupId>
+  <artifactId>gatling-maven-plugin</artifactId>
+  <version>2.2.0</version>
+  <executions>
+    <execution>
+      <id>sampleId</id>
+      <phase>integration-test</phase>
+      <goals>
+        <goal>execute</goal>
+      </goals>
+      <configuration>
+        <simulationClass>com.worldline.SampleSimulation</simulationClass>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+<plugin>
+  <groupId>org.eclipse.jetty</groupId>
+  <artifactId>jetty-maven-plugin</artifactId>
+  <version>9.3.0.M2</version>
+  <configuration>
+    <stopPort>9966</stopPort>
+    <stopKey>foo</stopKey>
+    <stopWait>10</stopWait>
+  </configuration>
+  <executions>
+    <execution>
+      <id>before-test</id>
+      <phase>pre-integration-test</phase>
+      <goals>
+        <goal>start</goal>
+      </goals>
+    </execution>
+    <execution>
+      <id>after-test</id>
+      <phase>post-integration-test</phase>
+      <goals>
+        <goal>stop</goal>
+      </goals>
+    </execution>
+  </executions>
+  ```
+
