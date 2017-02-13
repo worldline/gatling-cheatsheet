@@ -166,6 +166,8 @@ http("name").get("/path")
 http("get home").get("/users/${name}")
 ```
 
+More info : <http://gatling.io/docs/2.2.3/http/http_check.html#http-check>
+
 ### Assertions
 
 ```scala 
@@ -179,8 +181,9 @@ setUp(scn).assertions(
 // aggregations : min, max, mean, stdDev, percentile1 to percentile4
 // comparison : lessThan(threshold), greaterThan(threshold), between(thresholdMin, thresholdMax), 
 //              is(value), in(sequence)
-
 ```
+
+More info : <http://gatling.io/docs/2.2.3/general/assertions.html>
 
 ## Configuration
       
