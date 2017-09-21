@@ -231,7 +231,7 @@ val feeder = csv("data.csv")
 scn.feed(feeder).exec(
   http("name")
   .post("url")
-  .body(ELFileBody("filename.xml")).asXML))
+  .body(ElFileBody("filename.xml")).asXML))
 ```
 
 More info : <http://gatling.io/docs/2.2.3/session/feeder.html>
