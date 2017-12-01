@@ -66,7 +66,7 @@ body(RawFileBody("bodyFileName.json")).asJSON
 
 ## Scenario
 
-Official doc : <http://gatling.io/docs/2.2.3/general/scenario.html>
+Official doc : <http://gatling.io/docs/current/general/scenario.html>
 
 ### Pauses
 
@@ -89,7 +89,7 @@ Note : for the syntax ```2.milliseconds``` or ```5.seconds``` to compile, you ne
 import scala.concurrent.duration.DurationInt
 ```
 
-More info : <http://gatling.io/docs/2.2.3/general/scenario.html#pause>
+More info : <http://gatling.io/docs/current/general/scenario.html#pause>
 
 ### Loops
 
@@ -100,7 +100,7 @@ scenario("sample")
   )
 ```
 
-More info : <http://gatling.io/docs/2.2.3/general/scenario.html#scenario-loops>
+More info : <http://gatling.io/docs/current/general/scenario.html#scenario-loops>
 
 ## Injection of Virtual Users
 
@@ -146,7 +146,7 @@ heavisideUsers(10) over(2.seconds)
 // better approximation of a peak of users
 ```
 
-More info : <http://gatling.io/docs/2.2.3/general/simulation_setup.html>
+More info : <http://gatling.io/docs/current/general/simulation_setup.html>
 
 ## Checks and Assertions
 
@@ -171,24 +171,24 @@ http("name").get("/path")
 http("get home").get("/users/${name}")
 ```
 
-More info : <http://gatling.io/docs/2.2.3/http/http_check.html#http-check>
+More info : <http://gatling.io/docs/current/http/http_check.html#http-check>
 
 ### Assertions
 
 ```scala 
 setUp(scn).assertions( 
-  global.responseTime.mean.lessThan(50), // mean resp time < 50 ms    
-  forAll.failedRequests.percent.lessThan(5) // for each request, < 5% failure
+  global.responseTime.mean.lt(50), // mean resp time < 50 ms    
+  forAll.failedRequests.percent.gt(5) // for each request, < 5% failure
 )
 // data : responseTime (in milliseconds), requestsPerSec
 // requests : allRequests, failedRequests, successfulRequests
 // units : percent, permillion, count
 // aggregations : min, max, mean, stdDev, percentile1 to percentile4
-// comparison : lessThan(threshold), greaterThan(threshold), between(thresholdMin, thresholdMax), 
+// comparison : lt(threshold), gt(threshold), between(thresholdMin, thresholdMax), 
 //              is(value), in(sequence)
 ```
 
-More info : <http://gatling.io/docs/2.2.3/general/assertions.html>
+More info : <http://gatling.io/docs/current/general/assertions.html>
 
 ## Feeders
 
@@ -234,7 +234,7 @@ scn.feed(feeder).exec(
   .body(ElFileBody("filename.xml")).asXML))
 ```
 
-More info : <http://gatling.io/docs/2.2.3/session/feeder.html>
+More info : <http://gatling.io/docs/current/session/feeder.html>
 
 ## Configuration
       
@@ -376,3 +376,4 @@ Note that you need to specify `<phase>integration-test</phase>`
     </execution>
   </executions>
 ```
+
